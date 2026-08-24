@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name — Portfolio</title>
-<meta name="description" content="Digital portfolio of Your Name — courses, skills, and projects.">
+<title>Kevin Li — Portfolio</title>
+<meta name="description" content="Kevin Li's computer science portfolio featuring projects, skills, and coursework.">
 
 <style>
   /* =========================================================
@@ -13,47 +13,70 @@
      index-card sections, ink + sage palette, serif + mono type.
      ========================================================= */
   :root {
-    --ink:        #24291f;   /* primary text */
-    --paper:      #f6f4ec;   /* page background */
-    --card:       #fffefb;   /* card background */
-    --sage:       #5a6b4f;   /* primary accent */
-    --sage-dim:   #97a68c;   /* muted accent / rules */
-    --rust:       #a3521c;   /* secondary accent (highlights) */
-    --line:       #d9d4c3;   /* hairline borders */
+    --bg: #070b14;
+    --bg-soft: #0b1220;
 
-    --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
-    --font-body:    "Source Serif 4", Georgia, serif;
-    --font-mono:    "IBM Plex Mono", "Courier New", monospace;
+    --card: rgba(15, 23, 42, 0.72);
+    --card-hover: rgba(20, 30, 52, 0.9);
 
-    --maxw: 880px;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+
+    --accent: #3b82f6;
+    --accent-2: #22d3ee;
+
+    --border: rgba(148, 163, 184, 0.16);
+
+    --font-display: Inter, Arial, sans-serif;
+    --font-body: Inter, Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+    --maxw: 1050px;
   }
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 
   body {
     margin: 0;
-    background: var(--paper);
-    color: var(--ink);
+    min-height: 100vh;
+
+    background:
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(59, 130, 246, 0.12),
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(34, 211, 238, 0.08),
+        transparent 40%
+      ),
+      var(--bg);
+
+    color: var(--text);
     font-family: var(--font-body);
     line-height: 1.55;
+
     -webkit-font-smoothing: antialiased;
+
+    position: relative;
+    overflow-x: hidden;
   }
 
-  /* subtle ledger-line texture on the page background */
-  body {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent,
-      transparent 38px,
-      var(--line) 38px,
-      var(--line) 39px
-    );
+  a {
+    color: var(--accent-2);
+    text-decoration: none;
   }
 
-  a { color: var(--rust); text-decoration-thickness: 1px; }
-  a:hover { color: var(--sage); }
+  a:hover {
+    color: var(--accent);
+  }
 
   .wrap {
     max-width: var(--maxw);
@@ -61,223 +84,517 @@
     padding: 0 24px;
   }
 
-  /* ---------- Header / Nav ---------- */
+  /* ---------- Header ---------- */
+
   header {
-    background: var(--paper);
-    border-bottom: 2px solid var(--ink);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
+
+    background: rgba(7, 11, 20, 0.75);
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(14px);
   }
+
   .nav-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 16px 0;
+
+    gap: 16px;
     flex-wrap: wrap;
-    gap: 10px;
   }
+
   .nav-mark {
     font-family: var(--font-mono);
     font-size: 0.85rem;
+
+    color: var(--accent-2);
+
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--sage);
   }
+
   nav ul {
     list-style: none;
+
     display: flex;
+    flex-wrap: wrap;
+
     gap: 22px;
+
     margin: 0;
     padding: 0;
+
     font-family: var(--font-mono);
     font-size: 0.82rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  nav a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
-  nav a:hover { border-bottom-color: var(--rust); color: var(--rust); }
 
-  /* ---------- Hero / Intro ---------- */
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  nav a {
+    color: var(--muted);
+
+    transition:
+      color 0.2s ease,
+      text-shadow 0.2s ease;
+  }
+
+  nav a:hover {
+    color: var(--text);
+
+    text-shadow:
+      0 0 12px rgba(59, 130, 246, 0.6);
+  }
+
+  /* ---------- Hero ---------- */
+
   .hero {
-    padding: 72px 0 56px;
+    padding: 110px 0 90px;
+
     text-align: center;
   }
+
   .eyebrow {
+    margin: 0 0 14px;
+
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    letter-spacing: 0.12em;
+
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--rust);
-    margin: 0 0 14px;
+
+    color: var(--accent-2);
   }
+
   h1.name {
+    margin: 0 0 16px;
+
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.4rem, 6vw, 3.6rem);
-    line-height: 1.05;
-    margin: 0 0 12px;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 750;
+
+    line-height: 0.95;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ffffff,
+        #93c5fd,
+        #22d3ee
+      );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
   }
+
   .role {
+    margin: 0 0 24px;
+
     font-family: var(--font-mono);
     font-size: 1rem;
-    color: var(--sage);
-    margin: 0 0 22px;
+
+    color: var(--accent);
   }
+
   .intro-text {
-    max-width: 62ch;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 65ch;
+
+    margin: 0 auto;
+
+    color: var(--muted);
+
     font-size: 1.08rem;
-    color: #40473a;
   }
+
   .contact-row {
-    margin-top: 26px;
+    margin-top: 28px;
+
     display: flex;
     justify-content: center;
-    gap: 18px;
     flex-wrap: wrap;
+
+    gap: 12px;
+
     font-family: var(--font-mono);
     font-size: 0.85rem;
   }
-  .contact-row a { color: var(--ink); }
-  .contact-row a:hover { color: var(--rust); }
 
-  /* ---------- Section shell ---------- */
-  section { padding: 52px 0; border-top: 1px solid var(--line); }
+  .contact-row a {
+    padding: 9px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    color: var(--text);
+
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .contact-row a:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(59, 130, 246, 0.5);
+
+    background: rgba(30, 41, 59, 0.8);
+  }
+
+  /* ---------- Sections ---------- */
+
+  section {
+    padding: 64px 0;
+
+    border-top: 1px solid var(--border);
+  }
+
   .section-head {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 6px;
-    margin-bottom: 28px;
+
+    margin-bottom: 30px;
+
     text-align: center;
   }
+
   .section-num {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--sage-dim);
-  }
-  h2.section-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.7rem;
-    margin: 0;
+    font-size: 0.78rem;
+
+    color: var(--accent-2);
   }
 
-  /* ---------- Courses (transcript table) ---------- */
+  h2.section-title {
+    margin: 0;
+
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  /* ---------- Courses ---------- */
+
   table.transcript {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95rem;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    overflow: hidden;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    backdrop-filter: blur(12px);
   }
+
   table.transcript th {
+    padding: 14px;
+
     text-align: left;
+
     font-family: var(--font-mono);
     font-size: 0.75rem;
+
+    color: var(--accent-2);
+
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--sage);
-    border-bottom: 2px solid var(--ink);
-    padding: 8px 10px;
+
+    border-bottom: 1px solid var(--border);
   }
+
   table.transcript td {
-    padding: 12px 10px;
-    border-bottom: 1px solid var(--line);
-    vertical-align: top;
+    padding: 15px 14px;
+
+    color: var(--muted);
+
+    border-bottom: 1px solid var(--border);
   }
-  table.transcript tr:hover td { background: var(--card); }
-  .course-code { font-family: var(--font-mono); color: var(--rust); white-space: nowrap; }
+
+  table.transcript tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.transcript tbody tr {
+    transition: background 0.2s ease;
+  }
+
+  table.transcript tbody tr:hover {
+    background: rgba(59, 130, 246, 0.06);
+  }
+
+  .course-code {
+    white-space: nowrap;
+
+    font-family: var(--font-mono);
+
+    color: var(--accent);
+  }
 
   /* ---------- Skills ---------- */
+
   .skills-grid {
     display: grid;
+
     grid-template-columns: 1fr 1fr;
-    gap: 36px;
+
+    gap: 22px;
   }
-  @media (max-width: 640px) {
-    .skills-grid { grid-template-columns: 1fr; }
+
+  .skill-group {
+    padding: 24px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    backdrop-filter: blur(12px);
   }
+
   .skill-group h3 {
+    margin: 0 0 16px;
+
     font-family: var(--font-mono);
     font-size: 0.82rem;
+
+    color: var(--accent-2);
+
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--sage);
-    margin: 0 0 14px;
   }
-  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip {
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 6px 12px;
-    border: 1px solid var(--ink);
-    border-radius: 2px;
-    background: var(--card);
-  }
-  .soft-list { list-style: none; margin: 0; padding: 0; }
-  .soft-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--line);
+
+  .chip-row {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+
+    gap: 8px;
   }
-  .soft-list li:last-child { border-bottom: none; }
-  .soft-list .mark { color: var(--rust); font-family: var(--font-mono); }
+
+  .chip {
+    padding: 7px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: rgba(30, 41, 59, 0.72);
+
+    color: var(--text);
+
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .soft-list {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .soft-list li {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 10px 0;
+
+    color: var(--muted);
+
+    border-bottom: 1px solid var(--border);
+  }
+
+  .soft-list li:last-child {
+    border-bottom: none;
+  }
+
+  .soft-list .mark {
+    color: var(--accent);
+  }
 
   /* ---------- Projects ---------- */
+
   .project-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
   }
-  @media (max-width: 640px) {
-    .project-grid { grid-template-columns: 1fr; }
-  }
+
   .project-card {
-    background: var(--card);
-    border: 1px solid var(--ink);
-    padding: 22px;
+    padding: 24px;
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
+
+    gap: 12px;
+
+    min-height: 260px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    backdrop-filter: blur(12px);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease,
+      box-shadow 0.25s ease;
   }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+
+    border-color:
+      rgba(59, 130, 246, 0.5);
+
+    background: var(--card-hover);
+
+    box-shadow:
+      0 18px 50px
+      rgba(0, 0, 0, 0.25);
+  }
+
   .project-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
     margin: 0;
+
+    font-size: 1.3rem;
   }
+
   .project-tags {
+    margin: 0;
+
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--sage);
+
+    color: var(--accent-2);
+
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .project-card p { margin: 0; font-size: 0.95rem; color: #40473a; }
-  .project-links { margin-top: auto; display: flex; gap: 14px; font-family: var(--font-mono); font-size: 0.82rem; }
 
-  /* ---------- Footer ---------- */
-  footer {
-    border-top: 2px solid var(--ink);
-    padding: 30px 0 50px;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--sage-dim);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+  .project-card p {
+    margin: 0;
+
+    color: var(--muted);
   }
 
-  /* keyboard focus visibility */
-  a:focus-visible, .chip:focus-visible {
-    outline: 2px solid var(--rust);
-    outline-offset: 2px;
+  .project-links {
+    margin-top: auto;
+
+    display: flex;
+
+    gap: 16px;
+
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+  }
+
+  .project-links a {
+    color: var(--accent-2);
+  }
+
+  .project-links a:hover {
+    color: var(--text);
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    padding: 30px 0 50px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 760px) {
+    .skills-grid,
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      padding: 80px 0 64px;
+    }
+
+    table.transcript {
+      font-size: 0.82rem;
+    }
+
+    table.transcript th,
+    table.transcript td {
+      padding: 10px 8px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .wrap {
+      padding: 0 16px;
+    }
+
+    .nav-row {
+      justify-content: center;
+    }
+
+    nav ul {
+      justify-content: center;
+
+      gap: 14px;
+    }
+
+    .contact-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .contact-row a {
+      text-align: center;
+    }
+
+    table.transcript {
+      display: block;
+
+      overflow-x: auto;
+
+      white-space: nowrap;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
+    html {
+      scroll-behavior: auto;
+    }
+
+    * {
+      transition: none !important;
+    }
   }
 </style>
 </head>
@@ -302,17 +619,18 @@
   <div class="wrap">
     <p class="eyebrow">Portfolio / 2026</p>
     <h1 class="name">Kevin Li</h1>
-    <p class="role">Currently an undergraduent studying Computer Science at Texas A&M University</p>
+    <p class="role">Computer Science Student at Texas A&M University</p>
     <p class="intro-text">
-      Write two or three sentences about who you are, what you're studying or working on,
-      and what kind of work you're looking for. Keep it specific: mention your focus area,
-      a strength, and what you're currently building toward.
+        I am a Computer Science student at Texas A&M University interested in
+        software engineering, full-stack development, and emerging technologies.
+        I enjoy building practical applications and learning new technologies
+        through hands-on projects such as real-time multiplayer web applications.
     </p>
     <div class="contact-row">
-      <a href="mailto:you@example.com">you@example.com</a>
-      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="/resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      <a href="mailto:kevin.lol2719@gmail.com">kevin.lol2719@gmail.com</a>
+      <a href="https://github.com/KodingKevin" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/kevin-li-a797782a8/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
     </div>
   </div>
 </section>
@@ -327,34 +645,60 @@
     <table class="transcript">
       <thead>
         <tr>
-          <th>Code</th>
-          <th>Course</th>
-          <th>Focus</th>
+        <th>Code</th>
+        <th>Course</th>
+        <th>Focus</th>
         </tr>
       </thead>
-      <tbody>
+        <tbody>
         <tr>
-          <td class="course-code">CS 201</td>
+          <td class="course-code">CSCE 331</td>
+          <td>Foundations of Software Engineering</td>
+          <td>Software design, development processes, and engineering practices</td>
+        </tr>
+
+        <tr>
+          <td class="course-code">CSCE 313</td>
+          <td>Introduction to Computer Systems</td>
+          <td>Computer systems, memory, processes, and low-level programming</td>
+        </tr>
+
+        <tr>
+          <td class="course-code">CSCE 314</td>
+          <td>Programming Languages</td>
+          <td>Programming paradigms, language concepts, and functional programming</td>
+        </tr>
+
+        <tr>
+          <td class="course-code">CSCE 312</td>
+          <td>Computer Organization</td>
+          <td>Computer architecture, machine-level representation, and hardware/software interaction</td>
+        </tr>
+
+        <tr>
+          <td class="course-code">CSCE 221</td>
           <td>Data Structures &amp; Algorithms</td>
-          <td>Trees, graphs, complexity analysis</td>
+          <td>Data structures, algorithm design, and complexity analysis</td>
         </tr>
+
         <tr>
-          <td class="course-code">CS 340</td>
-          <td>Database Systems</td>
-          <td>SQL, schema design, normalization</td>
+          <td class="course-code">CSCE 222</td>
+          <td>Discrete Structures for Computing</td>
+          <td>Logic, proofs, combinatorics, relations, and discrete mathematics</td>
         </tr>
+
         <tr>
-          <td class="course-code">CS 412</td>
-          <td>Web Application Development</td>
-          <td>Full-stack projects, REST APIs</td>
+          <td class="course-code">MATH 304</td>
+          <td>Linear Algebra</td>
+          <td>Matrices, vector spaces, linear transformations, and systems of equations</td>
         </tr>
+
         <tr>
-          <td class="course-code">STAT 250</td>
-          <td>Probability &amp; Statistics</td>
-          <td>Applied statistics for data analysis</td>
+          <td class="course-code">STAT 211</td>
+          <td>Principles of Statistics I</td>
+          <td>Probability, statistical analysis, estimation, and hypothesis testing</td>
         </tr>
-        <!-- add or remove rows as needed -->
-      </tbody>
+        </tbody>
     </table>
   </div>
 </section>
@@ -369,14 +713,17 @@
     <div class="skills-grid">
       <div class="skill-group">
         <h3>Hard Skills</h3>
-        <div class="chip-row">
+          <div class="chip-row">
           <span class="chip">Python</span>
+          <span class="chip">C++</span>
           <span class="chip">JavaScript</span>
+          <span class="chip">TypeScript</span>
           <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">Socket.IO</span>
           <span class="chip">SQL</span>
-          <span class="chip">Git &amp; GitHub</span>
           <span class="chip">HTML / CSS</span>
-          <span class="chip">Java</span>
+          <span class="chip">Git &amp; GitHub</span>
         </div>
       </div>
       <div class="skill-group">
@@ -401,45 +748,35 @@
     </div>
     <div class="project-grid">
 
-      <div class="project-card">
-        <h3>Project Title One</h3>
-        <p class="project-tags">React · Node.js · MongoDB</p>
-        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
-        <div class="project-links">
-          <a href="#" target="_blank" rel="noopener">Live demo</a>
-          <a href="#" target="_blank" rel="noopener">Source code</a>
-        </div>
-      </div>
+    <div class="project-card">
+    <h3>HiddenParty.IO</h3>
 
-      <div class="project-card">
-        <h3>Project Title Two</h3>
-        <p class="project-tags">Python · Data Analysis</p>
-        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
-        <div class="project-links">
-          <a href="#" target="_blank" rel="noopener">Live demo</a>
-          <a href="#" target="_blank" rel="noopener">Source code</a>
-        </div>
-      </div>
+    <p class="project-tags">
+        Next.js · React · TypeScript · Socket.IO · Tailwind CSS
+    </p>
 
-      <div class="project-card">
-        <h3>Project Title Three</h3>
-        <p class="project-tags">Java · Algorithms</p>
-        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
-        <div class="project-links">
-          <a href="#" target="_blank" rel="noopener">Live demo</a>
-          <a href="#" target="_blank" rel="noopener">Source code</a>
-        </div>
-      </div>
+    <p>
+        Developed a browser-based multiplayer social deduction game with
+        real-time lobby synchronization, role assignment, turn-based gameplay,
+        voting, host controls, and reconnect support. Built the frontend with
+        Next.js and React and implemented real-time multiplayer communication
+        using Socket.IO.
+    </p>
 
-      <div class="project-card">
-        <h3>Project Title Four</h3>
-        <p class="project-tags">HTML · CSS · JavaScript</p>
-        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
-        <div class="project-links">
-          <a href="#" target="_blank" rel="noopener">Live demo</a>
-          <a href="#" target="_blank" rel="noopener">Source code</a>
-        </div>
-      </div>
+    <div class="project-links">
+        <a href="https://hiddenparty-io.vercel.app"
+        target="_blank"
+        rel="noopener">
+        Live demo
+        </a>
+
+        <a href="https://github.com/KodingKevin/hiddenparty-io"
+        target="_blank"
+        rel="noopener">
+        Source code
+        </a>
+    </div>
+    </div>
 
     </div>
   </div>
@@ -447,7 +784,7 @@
 
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
-    <span>© 2026 Your Name</span>
+    <span>© 2026 Kevin Li</span>
     <span>Built with HTML &amp; CSS · Hosted on GitHub Pages</span>
   </div>
 </footer>
