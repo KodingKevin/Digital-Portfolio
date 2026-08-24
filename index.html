@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Portfolio</title>
+<meta name="description" content="Digital portfolio of Your Name — courses, skills, and projects.">
+
+<style>
+  /* =========================================================
+     DESIGN TOKENS — edit these to restyle the whole page
+     Concept: a "transcript / ledger" aesthetic — ruled lines,
+     index-card sections, ink + sage palette, serif + mono type.
+     ========================================================= */
+  :root {
+    --ink:        #24291f;   /* primary text */
+    --paper:      #f6f4ec;   /* page background */
+    --card:       #fffefb;   /* card background */
+    --sage:       #5a6b4f;   /* primary accent */
+    --sage-dim:   #97a68c;   /* muted accent / rules */
+    --rust:       #a3521c;   /* secondary accent (highlights) */
+    --line:       #d9d4c3;   /* hairline borders */
+
+    --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-body:    "Source Serif 4", Georgia, serif;
+    --font-mono:    "IBM Plex Mono", "Courier New", monospace;
+
+    --maxw: 880px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* subtle ledger-line texture on the page background */
+  body {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 38px,
+      var(--line) 38px,
+      var(--line) 39px
+    );
+  }
+
+  a { color: var(--rust); text-decoration-thickness: 1px; }
+  a:hover { color: var(--sage); }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header / Nav ---------- */
+  header {
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-mark {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  nav a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+  nav a:hover { border-bottom-color: var(--rust); color: var(--rust); }
+
+  /* ---------- Hero / Intro ---------- */
+  .hero {
+    padding: 72px 0 56px;
+    text-align: center;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 0 0 14px;
+  }
+  h1.name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height: 1.05;
+    margin: 0 0 12px;
+  }
+  .role {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--sage);
+    margin: 0 0 22px;
+  }
+  .intro-text {
+    max-width: 62ch;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.08rem;
+    color: #40473a;
+  }
+  .contact-row {
+    margin-top: 26px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  .contact-row a { color: var(--ink); }
+  .contact-row a:hover { color: var(--rust); }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 52px 0; border-top: 1px solid var(--line); }
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--sage-dim);
+  }
+  h2.section-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.7rem;
+    margin: 0;
+  }
+
+  /* ---------- Courses (transcript table) ---------- */
+  table.transcript {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  table.transcript th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sage);
+    border-bottom: 2px solid var(--ink);
+    padding: 8px 10px;
+  }
+  table.transcript td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.transcript tr:hover td { background: var(--card); }
+  .course-code { font-family: var(--font-mono); color: var(--rust); white-space: nowrap; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+  @media (max-width: 640px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+  .skill-group h3 {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sage);
+    margin: 0 0 14px;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    background: var(--card);
+  }
+  .soft-list { list-style: none; margin: 0; padding: 0; }
+  .soft-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 10px;
+  }
+  .soft-list li:last-child { border-bottom: none; }
+  .soft-list .mark { color: var(--rust); font-family: var(--font-mono); }
+
+  /* ---------- Projects ---------- */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 640px) {
+    .project-grid { grid-template-columns: 1fr; }
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--ink);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .project-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    margin: 0;
+  }
+  .project-tags {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--sage);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .project-card p { margin: 0; font-size: 0.95rem; color: #40473a; }
+  .project-links { margin-top: auto; display: flex; gap: 14px; font-family: var(--font-mono); font-size: 0.82rem; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 2px solid var(--ink);
+    padding: 30px 0 50px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--sage-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* keyboard focus visibility */
+  a:focus-visible, .chip:focus-visible {
+    outline: 2px solid var(--rust);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <span class="nav-mark">// portfolio</span>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ INTRODUCTION ============ -->
+<section class="hero" id="about">
+  <div class="wrap">
+    <p class="eyebrow">Portfolio / 2026</p>
+    <h1 class="name">Your Name</h1>
+    <p class="role">Field of study or job title — e.g. Computer Science Student</p>
+    <p class="intro-text">
+      Write two or three sentences about who you are, what you're studying or working on,
+      and what kind of work you're looking for. Keep it specific: mention your focus area,
+      a strength, and what you're currently building toward.
+    </p>
+    <div class="contact-row">
+      <a href="mailto:you@example.com">you@example.com</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="/resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RELEVANT COURSES ============ -->
+<section id="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Relevant Courses</h2>
+    </div>
+    <table class="transcript">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Course</th>
+          <th>Focus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="course-code">CS 201</td>
+          <td>Data Structures &amp; Algorithms</td>
+          <td>Trees, graphs, complexity analysis</td>
+        </tr>
+        <tr>
+          <td class="course-code">CS 340</td>
+          <td>Database Systems</td>
+          <td>SQL, schema design, normalization</td>
+        </tr>
+        <tr>
+          <td class="course-code">CS 412</td>
+          <td>Web Application Development</td>
+          <td>Full-stack projects, REST APIs</td>
+        </tr>
+        <tr>
+          <td class="course-code">STAT 250</td>
+          <td>Probability &amp; Statistics</td>
+          <td>Applied statistics for data analysis</td>
+        </tr>
+        <!-- add or remove rows as needed -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Hard Skills</h3>
+        <div class="chip-row">
+          <span class="chip">Python</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Git &amp; GitHub</span>
+          <span class="chip">HTML / CSS</span>
+          <span class="chip">Java</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Soft Skills</h3>
+        <ul class="soft-list">
+          <li><span class="mark">—</span> Team collaboration &amp; communication</li>
+          <li><span class="mark">—</span> Problem solving under deadlines</li>
+          <li><span class="mark">—</span> Project planning &amp; time management</li>
+          <li><span class="mark">—</span> Adaptability across new tools/domains</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="project-grid">
+
+      <div class="project-card">
+        <h3>Project Title One</h3>
+        <p class="project-tags">React · Node.js · MongoDB</p>
+        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
+        <div class="project-links">
+          <a href="#" target="_blank" rel="noopener">Live demo</a>
+          <a href="#" target="_blank" rel="noopener">Source code</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Project Title Two</h3>
+        <p class="project-tags">Python · Data Analysis</p>
+        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
+        <div class="project-links">
+          <a href="#" target="_blank" rel="noopener">Live demo</a>
+          <a href="#" target="_blank" rel="noopener">Source code</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Project Title Three</h3>
+        <p class="project-tags">Java · Algorithms</p>
+        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
+        <div class="project-links">
+          <a href="#" target="_blank" rel="noopener">Live demo</a>
+          <a href="#" target="_blank" rel="noopener">Source code</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Project Title Four</h3>
+        <p class="project-tags">HTML · CSS · JavaScript</p>
+        <p>One or two sentences describing the problem the project solves and your role in building it.</p>
+        <div class="project-links">
+          <a href="#" target="_blank" rel="noopener">Live demo</a>
+          <a href="#" target="_blank" rel="noopener">Source code</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Your Name</span>
+    <span>Built with HTML &amp; CSS · Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+</body>
+</html>
